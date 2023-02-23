@@ -1,16 +1,15 @@
 package main
 
 import (
-	"GoInternshipPart3/datamanager"
-	"fmt"
+	"GoInternshipPart3/handlers"
+	"net/http"
 )
 
 func main() {
-	payday := 31
-	daysUntilNext, paydayDate := datamanager.DaysUntilNextPayday(payday)
-	fmt.Printf("There are %v days until the payday that is on: %v\n", daysUntilNext, paydayDate)
-	paydayList := datamanager.PaydayList(payday)
-	for _, v := range paydayList {
-		fmt.Println(v)
+	http.HandleFunc("/till-salary/how-much", handlers.HowMuchUntilPayday)
+	http.HandleFunc("/till-salary/pay-day/", handlers.GetNextPaydays)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		return
 	}
 }
