@@ -53,7 +53,7 @@ func TestPaydayList(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := PaydayList(tt.time, tt.payday)
+			got := GetPaydaysList(tt.time, tt.payday)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
 				t.Errorf("Function result: %v, expected result: %v", got, tt.want)
 			}

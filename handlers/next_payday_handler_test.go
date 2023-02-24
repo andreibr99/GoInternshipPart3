@@ -23,6 +23,16 @@ func TestHowMuchUntilPayday(t *testing.T) {
 			statusCode: http.StatusBadRequest,
 		},
 		{
+			name:       "invalid pay day, string",
+			path:       "/till-salary/how-much?pay_day=sss",
+			statusCode: http.StatusBadRequest,
+		},
+		{
+			name:       "invalid pay day, empty",
+			path:       "/till-salary/how-much?pay_day=",
+			statusCode: http.StatusBadRequest,
+		},
+		{
 			name:       "valid pay day",
 			path:       "/till-salary/how-much?pay_day=25",
 			statusCode: http.StatusOK,
@@ -33,7 +43,7 @@ func TestHowMuchUntilPayday(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			req, err := http.NewRequest(http.MethodGet, tc.path, nil)
 			if err != nil {
-				t.Fatalf("could not create request: %v", err)
+				t.Errorf("could not create request: %v", err)
 			}
 
 			recorder := httptest.NewRecorder()

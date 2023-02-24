@@ -16,19 +16,20 @@ func CalculateNextPayday(today time.Time, payday int) (int, string) {
 		return 0, paydayTime.Format("2006-01-02")
 	}
 
-	// paydays is bigger than last day of the month, set paydays to last day of the month
+	// payday is bigger than last day of the month, set payday to last day of the month
 	if payday > lastDayOfMonth {
 		paydayTime = time.Date(today.Year(), today.Month(), lastDayOfMonth, 0, 0, 0, 0, time.Local)
 		paydayTime = removeWeekends(paydayTime)
 	} else if today.Equal(paydayTime) || today.After(paydayTime) {
-		// !this else because without it, if the paydays is on 31st, and it does not exist in the month, and today
-		// is the last day of the month, it returns the date and days remaining for the next month paydays date.
-		// payday has already passed this month, calculate next paydays for the following month.
+		/*!this else because without it, if the payday is on 31st, and it does not exist in the month, and today
+		is the last day of the month, it returns the date and days remaining for the next month payday date.*/
+
+		// payday has already passed this month, calculate next payday for the following month.
 		paydayTime = paydayTime.AddDate(0, 1, 0)
 		paydayTime = removeWeekends(paydayTime)
 	}
 
-	// if today is saturday and the paydays is tomorrow, it means that the paydays was on friday, so jump to next month
+	// if today is saturday and the payday is tomorrow, it means that the payday was on friday, so jump to next month
 	if checkForWeekend(paydayTime) && paydayTime == today.AddDate(0, 0, 1) {
 		paydayTime = paydayTime.AddDate(0, 1, 0)
 		paydayTime = removeWeekends(paydayTime)

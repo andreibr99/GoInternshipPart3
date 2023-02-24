@@ -2,7 +2,7 @@ package paydays
 
 import "time"
 
-func PaydayList(today time.Time, payday int) []string {
+func GetPaydaysList(today time.Time, payday int) []string {
 	var dates []string
 	months := 12
 	// prevent taking into account 1st month of next year

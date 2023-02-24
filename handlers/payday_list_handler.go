@@ -19,6 +19,7 @@ func GetNextPaydays(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid URL", http.StatusBadRequest)
 		return
 	}
+
 	payDay = strings.TrimSuffix(payDay, "/list-dates")
 	payDayInt, err := strconv.Atoi(payDay)
 	if err != nil || payDayInt < 1 || payDayInt > 31 {
@@ -26,7 +27,7 @@ func GetNextPaydays(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dates := paydays.PaydayList(time.Now(), payDayInt)
+	dates := paydays.GetPaydaysList(time.Now(), payDayInt)
 	resp := paydayList{List: dates}
 
 	jsonResponse, err := json.Marshal(resp)
