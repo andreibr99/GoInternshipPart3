@@ -4,6 +4,11 @@ import (
 	"time"
 )
 
+// CalculateNextPayday takes as input a type time variable which represents the desired day to be in, and an integer
+// which represents the pay day. It computes how many days are left until next pay day and the date in which that occurs.
+// The functions use checkForWeekend function to check if the next pay day is on a weekend, and if it is, it uses
+// removeWeekend function to set the pay day to friday before the weekend. It returns how many days left until the next
+// pay day as an integer, and the date of the next pay day as a string.
 func CalculateNextPayday(today time.Time, payday int) (int, string) {
 	paydayTime := time.Date(today.Year(), today.Month(), payday, 0, 0, 0, 0, time.Local)
 	lastDayOfMonth := time.Date(today.Year(), today.Month()+1, 0, 0, 0, 0, 0, time.Local).Day()

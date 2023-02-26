@@ -7,12 +7,14 @@ import (
 )
 
 func TestGetNextPaydays(t *testing.T) {
-	testCases := []struct {
+	type testCase struct {
 		name         string
 		path         string
 		expectedCode int
 		expectedBody string
-	}{
+	}
+
+	var tests = []testCase{
 		{
 			name:         "invalid URL",
 			path:         "/till-salary/pay-day/32/list-dates/invalid",
@@ -45,7 +47,7 @@ func TestGetNextPaydays(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
+	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			req, err := http.NewRequest(http.MethodGet, tc.path, nil)
 			if err != nil {

@@ -50,6 +50,12 @@ func TestPaydayList(t *testing.T) {
 				"2023-08-01", "2023-09-01", "2023-09-29", "2023-11-01", "2023-12-01",
 			},
 		},
+		{
+			name:   "last month of year, payday passed, output should pe empty",
+			time:   time.Date(2023, time.December, 21, 0, 0, 0, 0, time.Local),
+			payday: 15,
+			want:   nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -7,11 +7,13 @@ import (
 )
 
 func TestHowMuchUntilPayday(t *testing.T) {
-	testCases := []struct {
+	type testCase struct {
 		name       string
 		path       string
 		statusCode int
-	}{
+	}
+
+	var tests = []testCase{
 		{
 			name:       "invalid URL",
 			path:       "/invalid",
@@ -39,7 +41,7 @@ func TestHowMuchUntilPayday(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
+	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			req, err := http.NewRequest(http.MethodGet, tc.path, nil)
 			if err != nil {
