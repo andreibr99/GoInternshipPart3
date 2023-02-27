@@ -58,3 +58,18 @@ func TestHowMuchUntilPayday(t *testing.T) {
 		})
 	}
 }
+
+func TestHowMuchUntilPaydayInvalidMethod(t *testing.T) {
+	req, err := http.NewRequest(http.MethodPost, "/till-salary/how-much?pay_day=25", nil)
+	if err != nil {
+		t.Errorf("could not create request: %v", err)
+	}
+
+	recorder := httptest.NewRecorder()
+	handler := http.HandlerFunc(HowMuchUntilPayday)
+	handler.ServeHTTP(recorder, req)
+
+	if statusCode := recorder.Code; statusCode != http.StatusMethodNotAllowed {
+		t.Errorf("wrong status code, got: %v, want: %v", statusCode, http.StatusMethodNotAllowed)
+	}
+}

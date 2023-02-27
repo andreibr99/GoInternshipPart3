@@ -21,6 +21,11 @@ type paydayList struct {
 // format with a list of dates. If there is an error marshaling the response to JSON, the function returns an HTTP 500
 // error.
 func GetNextPaydays(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	payDay := strings.TrimPrefix(r.URL.Path, "/till-salary/pay-day/")
 	if !strings.HasSuffix(payDay, "/list-dates") {
 		http.Error(w, "Invalid URL", http.StatusBadRequest)

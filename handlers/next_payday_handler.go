@@ -20,6 +20,11 @@ type paydayDate struct {
 // of days and the date. If there is an error parsing the pay day parameter, the function returns an HTTP 400 error.
 // If there is an error marshaling the response to JSON, the function returns an HTTP 500 error.
 func HowMuchUntilPayday(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	payday, err := strconv.Atoi(r.URL.Query().Get("pay_day"))
 	if err != nil || payday < 1 || payday > 31 {
 		http.Error(w, "Invalid pay_day query parameter", http.StatusBadRequest)

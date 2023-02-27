@@ -69,3 +69,18 @@ func TestGetNextPaydays(t *testing.T) {
 		})
 	}
 }
+
+func TestGetNextPaydaysInvalidMethod(t *testing.T) {
+	req, err := http.NewRequest(http.MethodPost, "/till-salary/pay-day/15/list-dates", nil)
+	if err != nil {
+		t.Errorf("could not create request: %v", err)
+	}
+
+	recorder := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetNextPaydays)
+	handler.ServeHTTP(recorder, req)
+
+	if statusCode := recorder.Code; statusCode != http.StatusMethodNotAllowed {
+		t.Errorf("wrong status code, got: %v, want: %v", statusCode, http.StatusMethodNotAllowed)
+	}
+}
