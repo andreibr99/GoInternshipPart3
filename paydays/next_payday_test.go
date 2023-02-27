@@ -113,6 +113,13 @@ func TestDaysUntilNextPayday(t *testing.T) {
 			wantDays: 0,
 			wantDate: "2023-02-28",
 		},
+		{
+			name:     "payday passed in the last day of the month, and the pay day date should be next year",
+			time:     time.Date(2023, time.December, 25, 0, 0, 0, 0, time.Local),
+			payday:   14,
+			wantDays: 0,
+			wantDate: "2024-01-12", // 13,14 Jan are on a weekend
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
